@@ -1,15 +1,16 @@
 package ar.edu.itba.crypto.strategies;
 
-import java.awt.image.BufferedImage;
+import ar.edu.itba.crypto.Image;
 
 public class LSBEnhanced implements SteganographyStrategy {
+
 	@Override
-	public BufferedImage save(BufferedImage original, byte[] data) {
+	public Image save(Image original, byte[] data) {
 		return null;
 	}
 
 	@Override
-	public byte[] get(BufferedImage image) {
+	public byte[] get(Image image) {
 		return new byte[0];
 	}
 }

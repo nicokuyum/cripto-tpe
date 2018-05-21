@@ -1,10 +1,10 @@
 package ar.edu.itba.crypto.strategies;
 
-import java.awt.image.BufferedImage;
+import ar.edu.itba.crypto.Image;
 
 public interface SteganographyStrategy {
 	
-	public BufferedImage save(BufferedImage original, byte[] data);
+	Image save(Image original, byte[] data);
 	
-	public byte[] get(BufferedImage image);
+	byte[] get(Image image);
 }
