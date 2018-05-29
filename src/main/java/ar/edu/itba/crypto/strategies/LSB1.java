@@ -6,6 +6,8 @@ public class LSB1 implements SteganographyStrategy {
 
 	@Override
 	public Image save(Image original, byte[] data) {
+		for (byte b: data) {
+		}
 		return null;
 	}
 
