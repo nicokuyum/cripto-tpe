@@ -1,5 +1,8 @@
 package ar.edu.itba.crypto;
 
+import ar.edu.itba.crypto.strategies.LSB1WithExtension;
+import ar.edu.itba.crypto.strategies.LSB1WithoutExtension;
+import ar.edu.itba.crypto.strategies.SteganographyStrategy;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
@@ -22,14 +25,14 @@ public class Main {
 		if (args.embed && args.extract) {
 			throw new ParameterException("Can't encrypt and decrypt as the same time");
 		}
-		File bmpFile = new File(args.image);
+		File bmpFile = new File("image.bmp");
 		BufferedImage image = ImageIO.read(bmpFile);
 		Image i = new Image(image);
-		if (args.embed) {
+		SteganographyStrategy strategy = new LSB1WithoutExtension();
+		byte[] data = "I will be hidden".getBytes();
+		Image modified = strategy.save(i, new BinaryFile(data));
+		BinaryFile retrieved = strategy.get(modified);
 
-		}
-		if (args.extract) {
-
-		}
+		System.out.println("Retrieved message is: " + new String(retrieved.getData()) + " with extension: " + retrieved.getExtension());
 	}
 }

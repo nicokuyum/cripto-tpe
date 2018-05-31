@@ -72,6 +72,14 @@ public class Image {
 		return data[y][x][colorPos];
 	}
 
+	public byte getLSB(int pos) {
+		int pixelPos = pos / 3;
+		int colorPos = pos % 3;
+		int x = pixelPos % w;
+		int y = pixelPos / w;
+		return (byte)(data[y][x][colorPos] & 0x01);
+	}
+
 	public int length() {
 		return length;
 	}

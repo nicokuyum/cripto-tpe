@@ -1,6 +1,6 @@
 package ar.edu.itba.crypto.converters;
 
-import ar.edu.itba.crypto.strategies.LSB1;
+import ar.edu.itba.crypto.strategies.LSB1WithoutExtension;
 import ar.edu.itba.crypto.strategies.LSB4;
 import ar.edu.itba.crypto.strategies.LSBEnhanced;
 import ar.edu.itba.crypto.strategies.SteganographyStrategy;
@@ -13,7 +13,7 @@ public class SteganographyConverter implements IStringConverter<SteganographyStr
 	public SteganographyStrategy convert(String value) {
 		switch (value.toUpperCase()) {
 			case "LSB1":
-				return new LSB1();
+				return new LSB1WithoutExtension();
 			case "LSB4":
 				return new LSB4();
 			case "LSBE":
