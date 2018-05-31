@@ -9,5 +9,3 @@ Download [here](http://www.oracle.com/technetwork/java/javase/downloads/jce8-dow
 
 Instructions on installations for Windows/Linux are on downloaded zip file ReadMe.
 For Mac OS see [steps](https://stackoverflow.com/questions/37741142/how-to-install-unlimited-strength-jce-for-java-8-in-os-x)
-
-
