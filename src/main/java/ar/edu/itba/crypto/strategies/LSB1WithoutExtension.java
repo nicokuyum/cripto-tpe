@@ -2,8 +2,11 @@ package ar.edu.itba.crypto.strategies;
 
 import ar.edu.itba.crypto.BinaryFile;
 import ar.edu.itba.crypto.Image;
+import com.google.common.base.Charsets;
 import com.google.common.primitives.Bytes;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +46,9 @@ public class LSB1WithoutExtension implements SteganographyStrategy {
 		for(; pos < 32; pos++) {
 			length <<=1;
 			length |= image.getLSB(pos);
+			System.out.println("pos: " + pos + " v: " + image.getLSB(pos));
 		}
-
+		length *=8;
 		while (pos < length + 32) {
 			data.add(getByte(image, pos));
 			pos +=8;
@@ -60,5 +64,27 @@ public class LSB1WithoutExtension implements SteganographyStrategy {
 			b |= image.getLSB(pos);
 		}
 		return b;
+	}
+
+	public void analize(Image i) {
+		int pos = 0;
+		byte[] b = new byte[i.length() / 8];
+		int j = 0;
+		while(pos < i.length()) {
+			b[j] = getByte(i, pos);
+			j++;
+			pos+= 8;
+		}
+		for( j = 0; j< 10;j++){
+			System.out.println(Integer.toBinaryString(b[j] & 0xFF));
+		}
+		String s = new String(b, Charsets.US_ASCII);
+		String end = s.split("%%EOF")[1];
+		System.out.println(s.indexOf("%%EOF"));
+		for(char c : end.toCharArray()) {
+			//System.out.println((byte) c);
+		}
+
+		System.out.println();
 	}
 }
