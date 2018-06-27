@@ -43,7 +43,7 @@ public class Image {
 	 * @param bitPos the position of the bit inside the b to be added.
 	 */
 	public void put(int pos, byte b, int bitPos) {
-		int pixelPos = pos / 3;
+		/*int pixelPos = pos / 3;
 		int colorPos = pos % 3;
 		int x = pixelPos % w;
 		int y = pixelPos / w;
@@ -53,15 +53,40 @@ public class Image {
 		} else {
 			data[h - 1 - y][x][colorPos] = (byte)(data[h - 1 - y][x][colorPos] | 0x01);
 		}
-
+		*/
+		put(pos, b, bitPos, 1);
 	}
 
 	public void put(int pos, byte b, int bitPos, int length) {
-
+		int pixelPos = pos / 3;
+		int colorPos = pos % 3;
+		int x = pixelPos % w;
+		int y = pixelPos / w;
+		byte bit = (byte)(b >>> bitPos & getMask(length)); // so 0000000(0|1)
+		data[h - 1 - y][x][colorPos] = (byte)((data[h - 1 - y][x][colorPos] & ~getMask(length)) | bit);
 	}
 
+	private byte getMask(int length) {
+		switch (length){
+			case 1:
+				return 0b01;
+			case 2:
+				return 0b11;
+			case 3:
+				return 0b111;
+			case 4:
+				return 0b1111;
+			case 5:
+				return 0b11111;
+			case 6:
+				return 0b111111;
+			case 7:
+				return 0b1111111;
+		}
+		return 0;
+	}
 	public int get(int x, int y) {
-		return (data[h - y][x][0] << 16 | data[h - y][x][1] << 8 | data[h - y][x][2]);
+		return ((data[y][x][0] & 0xFF) << 0) | ((data[y][x][1] & 0xFF) << 8) | ((data[y][x][2] & 0xFF) << 16);
 	}
 
 	public byte get(int pos) {
@@ -72,12 +97,12 @@ public class Image {
 		return data[h - 1 - y][x][colorPos];
 	}
 
-	public byte getLSB(int pos) {
+	public byte getLSB(int pos, int step) {
 		int pixelPos = pos / 3;
 		int colorPos = pos % 3;
 		int x = pixelPos % w;
 		int y = pixelPos / w;
-		return (byte)(data[h - 1 - y][x][colorPos] & 0x01);
+		return (byte)(data[h - 1 - y][x][colorPos] & getMask(step));
 	}
 
 	public int length() {

@@ -12,9 +12,9 @@ public class SteganographyConverter implements IStringConverter<SteganographyStr
 			case "LSB1":
 				return new LSB1WithExtension();
 			case "LSB4":
-				return new LSB4();
+				return new LSB4WithExtension();
 			case "LSBE":
-				return new LSBEnhanced();
+				return new LSBEnhancedWithExtension();
 			default:
 				throw new ParameterException("Invalid Steganography method");
 		}

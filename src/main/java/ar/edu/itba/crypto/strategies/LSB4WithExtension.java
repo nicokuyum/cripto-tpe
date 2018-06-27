@@ -4,19 +4,17 @@ import ar.edu.itba.crypto.BinaryFile;
 import ar.edu.itba.crypto.Image;
 import com.google.common.base.Charsets;
 
-import java.nio.charset.Charset;
-
-public class LSB1WithExtension extends LSB1WithoutExtension {
+public class LSB4WithExtension extends LSB4WithoutExtension {
 
 	@Override
 	public BinaryFile get(Image image) {
 		BinaryFile fileWithoutExtension = super.get(image);
-		int pos = (fileWithoutExtension.getData().length + 4) * 8;
+		int pos = (fileWithoutExtension.getData().length + 4) * 2;
 		StringBuilder extension = new StringBuilder();
 		boolean endOfExtension = false;
 		while(!endOfExtension) {
 			byte b = getByte(image, pos, step);
-			pos += 8;
+			pos +=2;
 			if(b == 0){
 				endOfExtension = true;
 			} else {

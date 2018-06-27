@@ -5,15 +5,12 @@ import ar.edu.itba.crypto.Image;
 import com.google.common.base.Charsets;
 import com.google.common.primitives.Bytes;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LSB1WithoutExtension extends LSB {
-
+public class LSB4WithoutExtension extends LSB {
 	@Override
 	protected int step() {
-		return 1;
+		return 4;
 	}
 }
