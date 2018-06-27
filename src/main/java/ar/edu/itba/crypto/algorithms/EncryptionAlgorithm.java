@@ -8,22 +8,14 @@ import java.security.MessageDigest;
 public abstract class EncryptionAlgorithm {
 
 	public byte[] encrypt(byte[] input, EncryptionMode mode, String password) throws Exception {
-		Cipher cipher = Cipher.getInstance(getName() + "/" + mode.toString() + "/PKCS5Padding");
-		MessageDigest md5 = MessageDigest.getInstance("MD5");
-
-		final byte[][] keyAndIV = EVP_BytesToKey(getKeyLength() / Byte.SIZE, cipher.getBlockSize(), md5, password.getBytes(), 1);
-		SecretKeySpec key = new SecretKeySpec(keyAndIV[0], getName());
-
-		if (usesIV(mode)) {
-			IvParameterSpec iv = new IvParameterSpec(keyAndIV[1]);
-			cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-		} else {
-			cipher.init(Cipher.ENCRYPT_MODE, key);
-		}
-		return cipher.doFinal(input);
+		return transform(input, mode, password, Cipher.ENCRYPT_MODE);
 	}
 
 	public byte[] decrypt(byte[] input, EncryptionMode mode, String password) throws Exception {
+		return transform(input, mode, password, Cipher.DECRYPT_MODE);
+	}
+
+	private byte[] transform(byte[] input, EncryptionMode mode, String password, int cipherMode) throws Exception{
 		Cipher cipher = Cipher.getInstance(getName() + "/" + mode.toString() + "/PKCS5Padding");
 		MessageDigest md5 = MessageDigest.getInstance("MD5");
 
@@ -32,9 +24,9 @@ public abstract class EncryptionAlgorithm {
 
 		if (usesIV(mode)) {
 			IvParameterSpec iv = new IvParameterSpec(keyAndIV[1]);
-			cipher.init(Cipher.DECRYPT_MODE, key, iv);
+			cipher.init(cipherMode, key, iv);
 		} else {
-			cipher.init(Cipher.DECRYPT_MODE, key);
+			cipher.init(cipherMode, key);
 		}
 		return cipher.doFinal(input);
 	}
@@ -44,10 +36,7 @@ public abstract class EncryptionAlgorithm {
 	abstract int getKeyLength();
 
 	private boolean usesIV(EncryptionMode mode) {
-		if (mode.equals(EncryptionMode.ECB)) {
-			return false;
-		}
-		return true;
+		return !mode.equals(EncryptionMode.ECB);
 	}
 
 	// from https://gist.github.com/luosong/5523434
