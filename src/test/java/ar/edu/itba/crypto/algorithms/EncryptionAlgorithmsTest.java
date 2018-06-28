@@ -1,6 +1,6 @@
 package ar.edu.itba.crypto.algorithms;
 
-import ar.edu.itba.crypto.modes.EncryptionMode;
+import ar.edu.itba.crypto.modes.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class EncryptionAlgorithmsTest {
 
 	@Test
 	public void allModesEncryptionTest() throws Exception {
-		EncryptionMode[] modes = EncryptionMode.values();
+		EncryptionMode[] modes = {new ModeCBC(), new ModeCFB(), new ModeECB(), new ModeOFB()};
 		byte[] input = "Supa secret message".getBytes();
 		String password = "password";
 

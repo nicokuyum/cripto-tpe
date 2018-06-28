@@ -26,8 +26,6 @@ public class Main {
 				.build()
 				.parse(argv);
 
-		System.out.println("Embed = " + args.embed);
-
 		if (args.embed && args.extract) {
 			throw new ParameterException("Can't encrypt and decrypt as the same time");
 		}

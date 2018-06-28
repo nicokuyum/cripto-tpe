@@ -1,7 +1,13 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "2.0.4"
+}
+
 group 'ar.edu.itba.crypto'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+
+
 
 sourceCompatibility = 1.8
 
@@ -14,4 +20,12 @@ dependencies {
     compile 'com.google.guava:guava:25.1-jre'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+
+    manifest {
+        attributes 'Main-Class': 'ar.edu.itba.crypto.Main'
+    }
 }

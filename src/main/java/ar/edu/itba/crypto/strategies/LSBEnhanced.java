@@ -16,8 +16,8 @@ public class LSBEnhanced implements SteganographyStrategy {
 	public Image save(Image original, BinaryFile file) {
 		byte[] data = file.getData();
 		int[] candidates = getCandidates(original);
-		if (candidates.length < (data.length + 4) * 8)
-			throw new IllegalStateException("Message is larger than accepted by the image, current length: " + data.length + " max accepted " + candidates.length);
+		if (candidates.length * 8 < (data.length + 4) * 8)
+			throw new IllegalStateException("Message is larger than accepted by the image, current length: " + data.length + " max accepted " + candidates.length / 8);
 
 		int length = data.length;
 		int candidatesIndex = 0;
