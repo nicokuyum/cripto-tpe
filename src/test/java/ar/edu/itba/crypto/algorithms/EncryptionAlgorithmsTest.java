@@ -1,5 +1,6 @@
 package ar.edu.itba.crypto.algorithms;
 
+import ar.edu.itba.crypto.modes.EncryptionMode;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

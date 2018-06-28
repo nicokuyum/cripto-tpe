@@ -2,10 +2,11 @@ package ar.edu.itba.crypto;
 
 import ar.edu.itba.crypto.algorithms.AES128;
 import ar.edu.itba.crypto.algorithms.EncryptionAlgorithm;
-import ar.edu.itba.crypto.algorithms.EncryptionMode;
+import ar.edu.itba.crypto.modes.EncryptionMode;
 import ar.edu.itba.crypto.converters.EncryptionAlgorithmConverter;
 import ar.edu.itba.crypto.converters.EncryptionModeConverter;
 import ar.edu.itba.crypto.converters.SteganographyConverter;
+import ar.edu.itba.crypto.modes.ModeCBC;
 import ar.edu.itba.crypto.strategies.SteganographyStrategy;
 import com.beust.jcommander.Parameter;
 
@@ -33,7 +34,7 @@ public class Args {
 	public EncryptionAlgorithm encryptionAlgorithm = new AES128();
 
 	@Parameter(names = "-m", description = "ecb | cfb | ofb | cbc", converter = EncryptionModeConverter.class)
-	public EncryptionMode mode = EncryptionMode.CBC;
+	public EncryptionMode mode = new ModeCBC();
 
 	@Parameter(names = "-pass", description = "Contraseña de encripción")
 	public String password;

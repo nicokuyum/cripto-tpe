@@ -1,5 +1,7 @@
 package ar.edu.itba.crypto.algorithms;
 
+import ar.edu.itba.crypto.modes.EncryptionMode;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,13 +18,13 @@ public abstract class EncryptionAlgorithm {
 	}
 
 	private byte[] transform(byte[] input, EncryptionMode mode, String password, int cipherMode) throws Exception{
-		Cipher cipher = Cipher.getInstance(getName() + "/" + mode.toString() + "/PKCS5Padding");
-		MessageDigest md5 = MessageDigest.getInstance("MD5");
+		Cipher cipher = Cipher.getInstance(getName() + "/" + mode.getName() + "/" + mode.getPadding());
+		MessageDigest md5 = MessageDigest.getInstance("SHA-256");
 
 		final byte[][] keyAndIV = EVP_BytesToKey(getKeyLength() / Byte.SIZE, cipher.getBlockSize(), md5, password.getBytes(), 1);
 		SecretKeySpec key = new SecretKeySpec(keyAndIV[0], getName());
 
-		if (usesIV(mode)) {
+		if (mode.usesIV()) {
 			IvParameterSpec iv = new IvParameterSpec(keyAndIV[1]);
 			cipher.init(cipherMode, key, iv);
 		} else {
@@ -34,10 +36,6 @@ public abstract class EncryptionAlgorithm {
 	abstract String getName();
 
 	abstract int getKeyLength();
-
-	private boolean usesIV(EncryptionMode mode) {
-		return !mode.equals(EncryptionMode.ECB);
-	}
 
 	// from https://gist.github.com/luosong/5523434
 	public static byte[][] EVP_BytesToKey(int key_len, int iv_len, MessageDigest md, byte[] data, int count) {
