@@ -20,10 +20,11 @@ public abstract class LSB implements SteganographyStrategy{
 			throw new IllegalStateException("Message is larger than accepted by the image");
 
 		int length = data.length;
-		int imagePos = step;
-		for (; imagePos < 32; imagePos+= step) {
-			byte b = (byte)(length >>> (32 - imagePos));
-			original.put(imagePos, b,0, step);
+		int imagePos = 0;
+		for (int i = 3; i >=0; i--) {
+			byte s = (byte)(length >>> (8 * i));
+			imagePos = putByte(s,original, imagePos);
+			//original.put(imagePos, b,0, step);
 		}
 		for (int i = 0, dataLength = data.length; i < dataLength; i++) {
 			byte b = data[i];
@@ -33,9 +34,9 @@ public abstract class LSB implements SteganographyStrategy{
 	}
 
 	protected int putByte(byte b, Image original, int staringPosition) {
-		for (int j = 7; j>=0 ; j-= step) {
+		for (int j = 8 - step; j>=0 ; j-= step) {
 			original.put(staringPosition, b, j, step);
-			staringPosition+=step;
+			staringPosition++;
 		}
 		return staringPosition;
 	}
@@ -48,8 +49,8 @@ public abstract class LSB implements SteganographyStrategy{
 			length <<= step;
 			length |= image.getLSB(pos, step);
 		}
-		length *= (8 / step);
-		while (pos < length + (32 / step)) {
+		length = length * (8 / step) + (32 /step);
+		while (pos < length) {
 			data.add(getByte(image, pos, step));
 			pos += (8 / step);
 		}

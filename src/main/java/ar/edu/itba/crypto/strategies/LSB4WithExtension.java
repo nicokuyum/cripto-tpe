@@ -28,7 +28,7 @@ public class LSB4WithExtension extends LSB4WithoutExtension {
 	@Override
 	public Image save(Image original, BinaryFile file) {
 		Image img = super.save(original, file);
-		int pos = (file.getData().length + 4) * 8;
+		int pos = (file.getData().length + 4) * 2;
 		byte[] extension = file.getExtension().getBytes(Charsets.US_ASCII);
 		for (int i = 0; i< extension.length;i++) {
 			byte b = extension[i];
