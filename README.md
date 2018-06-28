@@ -10,8 +10,12 @@ Download [here](http://www.oracle.com/technetwork/java/javase/downloads/jce8-dow
 Instructions on installations for Windows/Linux are on downloaded zip file ReadMe.
 For Mac OS see [steps](https://stackoverflow.com/questions/37741142/how-to-install-unlimited-strength-jce-for-java-8-in-os-x)
 
-To build the program:
-    ```./gradlew shadowJar```
+To run:
 
-then go to build/libs and run:
-   ```java -jar cripto-tpe-1.0-SNAPSHOT-all.jar [PROGRAM ARGUMENTS]```
+    java -jar stegobmp [PROGRAM ARGUMENTS]
+
+To build and run the program:
+
+    ./gradlew shadowJar
+    cd build/libs
+    java -jar cripto-tpe-all.jar [PROGRAM ARGUMENTS]

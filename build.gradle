@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'ar.edu.itba.crypto'
-version '1.0-SNAPSHOT'
+version ''
 
 apply plugin: 'java'
 
