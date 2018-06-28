@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LSBEnhancedWithoutExtension implements SteganographyStrategy {
+public class LSBEnhanced implements SteganographyStrategy {
 
 	@Override
 	public Image save(Image original, BinaryFile file) {
@@ -98,5 +98,39 @@ public class LSBEnhancedWithoutExtension implements SteganographyStrategy {
 		//}
 
 		System.out.println(s);
+	}
+
+	@Override
+	public BinaryFile getWithExtension(Image image) {
+		BinaryFile fileWithoutExtension = get(image);
+		int pos = (fileWithoutExtension.getData().length + 4) * 8;
+		int[] candidates = getCandidates(image);
+		StringBuilder extension = new StringBuilder();
+		boolean endOfExtension = false;
+		while(!endOfExtension) {
+			byte b = getByte(image, pos, candidates);
+			pos +=8;
+			if(b == 0){
+				endOfExtension = true;
+			} else {
+				extension.append((char) b);
+			}
+		}
+		fileWithoutExtension.setExtension(extension.toString());
+		return fileWithoutExtension;
+	}
+
+	@Override
+	public Image saveWithExtension(Image original, BinaryFile file) {
+		Image img = save(original, file);
+		int pos = (file.getData().length + 4) * 8;
+		int[] candidates = getCandidates(original);
+		byte[] extension = file.getExtension().getBytes(Charsets.US_ASCII);
+		for (int i = 0; i< extension.length;i++) {
+			byte b = extension[i];
+			pos = putByte(b, img, pos, candidates);
+		}
+		putByte((byte) 0, img, pos, candidates);
+		return img;
 	}
 }

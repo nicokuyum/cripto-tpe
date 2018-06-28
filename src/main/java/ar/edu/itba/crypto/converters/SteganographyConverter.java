@@ -10,11 +10,11 @@ public class SteganographyConverter implements IStringConverter<SteganographyStr
 	public SteganographyStrategy convert(String value) {
 		switch (value.toUpperCase()) {
 			case "LSB1":
-				return new LSB1WithExtension();
+				return new LSB1();
 			case "LSB4":
-				return new LSB4WithExtension();
+				return new LSB4();
 			case "LSBE":
-				return new LSBEnhancedWithExtension();
+				return new LSBEnhanced();
 			default:
 				throw new ParameterException("Invalid Steganography method");
 		}

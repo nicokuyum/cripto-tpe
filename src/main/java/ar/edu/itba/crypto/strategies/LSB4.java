@@ -8,7 +8,7 @@ import com.google.common.primitives.Bytes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LSB4WithoutExtension extends LSB {
+public class LSB4 extends LSB {
 	@Override
 	protected int step() {
 		return 4;

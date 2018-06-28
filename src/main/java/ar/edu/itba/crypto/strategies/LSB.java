@@ -33,6 +33,19 @@ public abstract class LSB implements SteganographyStrategy{
 		return original;
 	}
 
+	@Override
+	public Image saveWithExtension(Image original, BinaryFile file) {
+		Image img = save(original, file);
+		int pos = (file.getData().length + 4) * (8 / step);
+		byte[] extension = file.getExtension().getBytes(Charsets.US_ASCII);
+		for (int i = 0; i< extension.length;i++) {
+			byte b = extension[i];
+			pos = putByte(b, img, pos);
+		}
+		putByte((byte) 0, img, pos);
+		return img;
+	}
+
 	protected int putByte(byte b, Image original, int staringPosition) {
 		for (int j = 8 - step; j>=0 ; j-= step) {
 			original.put(staringPosition, b, j, step);
@@ -57,6 +70,26 @@ public abstract class LSB implements SteganographyStrategy{
 
 		return new BinaryFile(Bytes.toArray(data));
 	}
+
+	@Override
+	public BinaryFile getWithExtension(Image image) {
+		BinaryFile fileWithoutExtension = get(image);
+		int pos = (fileWithoutExtension.getData().length + 4) * (8 / step);
+		StringBuilder extension = new StringBuilder();
+		boolean endOfExtension = false;
+		while(!endOfExtension) {
+			byte b = getByte(image, pos, step);
+			pos += (8 / step);
+			if(b == 0){
+				endOfExtension = true;
+			} else {
+				extension.append((char) b);
+			}
+		}
+		fileWithoutExtension.setExtension(extension.toString());
+		return fileWithoutExtension;
+	}
+
 
 	public byte getByte(Image image, int pos, int step) {
 		byte b = 0;

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.awt.image.BufferedImage;
 
-public class LSB1WithoutExtensionTest {
+public class LSB1Test {
 
 	private Image img;
 
@@ -25,7 +25,7 @@ public class LSB1WithoutExtensionTest {
 	@Test
 	public void correctSteganographyTest() {
 		byte[] data = {(byte)0xFF, (byte)0x00, (byte)0xFF};
-		LSB1WithoutExtension strat = new LSB1WithoutExtension();
+		LSB1 strat = new LSB1();
 		strat.save(img, new BinaryFile(data));
 		byte[] savedLength = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0}; //24
 		System.out.println(savedLength.length);
@@ -51,7 +51,7 @@ public class LSB1WithoutExtensionTest {
 
 	@Test
 	public void setByteTest() {
-		LSB1WithoutExtension strat = new LSB1WithoutExtension();
+		LSB1 strat = new LSB1();
 		strat.putByte((byte) 0b11101010, img, 0);
 		assert img.getLSB(0) == 1;
 		assert img.getLSB(1) == 1;
@@ -70,7 +70,7 @@ public class LSB1WithoutExtensionTest {
 
 	@Test
 	public void getByteTest() {
-		LSB1WithoutExtension strat = new LSB1WithoutExtension();
+		LSB1 strat = new LSB1();
 		strat.putByte((byte) 0b10111000, img, 8);
 		byte g = strat.getByte(img, 8);
 		assert g == (byte) 0b10111000;

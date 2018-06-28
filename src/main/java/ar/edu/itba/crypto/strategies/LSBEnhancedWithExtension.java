@@ -4,7 +4,7 @@ import ar.edu.itba.crypto.BinaryFile;
 import ar.edu.itba.crypto.Image;
 import com.google.common.base.Charsets;
 
-public class LSBEnhancedWithExtension extends LSBEnhancedWithoutExtension {
+public class LSBEnhancedWithExtension extends LSBEnhanced {
 
 	@Override
 	public BinaryFile get(Image image) {

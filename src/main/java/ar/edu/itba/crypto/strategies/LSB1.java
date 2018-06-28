@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LSB1WithoutExtension extends LSB {
+public class LSB1 extends LSB {
 
 	@Override
 	protected int step() {

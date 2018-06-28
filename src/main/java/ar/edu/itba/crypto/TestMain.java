@@ -7,8 +7,8 @@ import java.util.Base64;
 public class TestMain {
 
 	public static void main(String[] args) throws Exception {
-		String message = "012345";
-		String pass = "Random Password!ASDojfwiehfoi!";
+		String message = "012jkfldhfdhksjhfkdjhfkjshdkfhksjhfkjshkfhskhfkjshkfjhskjfhksjhfksd345";
+		String pass = "passw";
 		System.out.println("Message: " + message);
 		EncryptionAlgorithm encryptionAlgorithm = new AES256();
 		EncryptionMode mode = EncryptionMode.OFB;
