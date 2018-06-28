@@ -16,8 +16,9 @@ public abstract class LSB implements SteganographyStrategy{
 	@Override
 	public Image save(Image original, BinaryFile file) {
 		byte[] data = file.getData();
-		if (original.length() < (data.length + 4) * (8 / step))
-			throw new IllegalStateException("Message is larger than accepted by the image");
+		int maxSize = original.length() / step;
+		if (maxSize < (data.length + 4) * (8 / step))
+			throw new IllegalStateException("Message is larger than accepted by the image, current size: " + file.getData().length + " max accepted: " + maxSize);
 
 		int length = data.length;
 		int imagePos = 0;

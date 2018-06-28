@@ -2,23 +2,42 @@ package ar.edu.itba.crypto;
 
 import ar.edu.itba.crypto.algorithms.*;
 import ar.edu.itba.crypto.modes.EncryptionMode;
+import ar.edu.itba.crypto.modes.ModeCFB;
 import ar.edu.itba.crypto.modes.ModeOFB;
+import com.google.common.base.Charsets;
+import com.google.common.primitives.Bytes;
 
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 public class TestMain {
 
 	public static void main(String[] args) throws Exception {
-		String message = "012345012345012345012345012345012345012345012345012345012345012345012345012345012345";
-		String pass = "p";
-		System.out.println("Message: " + message);
-		EncryptionAlgorithm encryptionAlgorithm = new AES256();
-		EncryptionMode mode = new ModeOFB();
-		byte[] cipheredText = encryptionAlgorithm.encrypt(message.getBytes(), mode, pass);
-		cipheredText[18] = 0;
-		System.out.println("Ciphered: " + new String(Base64.getEncoder().encode(cipheredText)));
-		System.out.println("Ciphered text length: " + cipheredText.length);
-		byte[] decryptedText = encryptionAlgorithm.decrypt(cipheredText, mode, pass);
-		System.out.println("Deciphered: " + new String(decryptedText));
+		BinaryFile bf = new BinaryFile(Files.readAllBytes(Paths.get("video.wmv")), ".wmv");
+		byte[] r = new AES256().decrypt(bf.getData(), new ModeCFB(), "solucion");
+		BinaryFile result = setBinaryFile(r);
+		FileOutputStream fos = new FileOutputStream("pepito" + result.getExtension());
+		fos.write(result.getData());
+
 	}
+	private static BinaryFile setBinaryFile(byte[] r) {
+		int length = (r[0] & 0xFF) << 24 | (r[1] & 0xFF) << 16 | (r[2] & 0xFF) << 8 | (r[3] & 0xFF);
+		int rIndex = 4;
+		byte[] data = new byte[length];
+		for(int i = 0; i< length;i++, rIndex++) {
+			data[i] = r[rIndex];
+		}
+		List<Byte> extensionBytes = new ArrayList<>();
+
+		while(r[rIndex] != 0) {
+			extensionBytes.add(r[rIndex++]);
+		}
+		String extension = new String(Bytes.toArray(extensionBytes), Charsets.US_ASCII);
+		return new BinaryFile(data, extension);
+	}
+
 }
