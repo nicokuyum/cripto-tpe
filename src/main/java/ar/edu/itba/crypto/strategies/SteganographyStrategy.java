@@ -1,10 +1,11 @@
 package ar.edu.itba.crypto.strategies;
 
+import ar.edu.itba.crypto.BinaryFile;
 import ar.edu.itba.crypto.Image;
 
 public interface SteganographyStrategy {
 	
-	Image save(Image original, byte[] data);
+	Image save(Image original, BinaryFile file);
 	
-	byte[] get(Image image);
+	BinaryFile get(Image image);
 }
