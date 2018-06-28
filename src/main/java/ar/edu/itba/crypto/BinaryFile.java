@@ -24,4 +24,8 @@ public class BinaryFile {
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
+
+	public void setData(byte[] encrypted) {
+		data = encrypted;
+	}
 }

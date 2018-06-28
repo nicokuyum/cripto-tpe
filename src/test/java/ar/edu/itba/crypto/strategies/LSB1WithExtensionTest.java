@@ -25,7 +25,7 @@ public class LSB1WithExtensionTest {
 	@Test
 	public void correctFileExtensionTest() {
 		byte[] data = {(byte)0xFF, (byte)0x00, (byte)0xFF};
-		LSB1WithoutExtension strat = new LSB1WithExtension();
+		LSB1 strat = new LSB1WithExtension();
 		String extension = ".jpg";
 		img = strat.save(img, new BinaryFile(data, extension));
 		BinaryFile bf = strat.get(img);
@@ -33,7 +33,7 @@ public class LSB1WithExtensionTest {
 		String saved = bf.getExtension();
 		System.out.println(saved);
 		assert saved.equals(extension);
-		// Checking the correct saving of the binary data is done in the LSB1WithoutExtensionTest
+		// Checking the correct saving of the binary data is done in the LSB1Test
 		// So we just check the extension is correctly saved
 
 

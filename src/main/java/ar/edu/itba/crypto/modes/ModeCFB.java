@@ -3,7 +3,7 @@ package ar.edu.itba.crypto.modes;
 public class ModeCFB implements EncryptionMode {
 	@Override
 	public String getName() {
-		return "CFB";
+		return "CFB8";
 	}
 
 	@Override
