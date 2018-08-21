@@ -1,5 +1,7 @@
-# cripto-tpe
+# Cryptography and Security Assignment
 Trabajo Práctico Especial de Criptografía y Seguridad | ITBA 2018
+
+Program which applying [steganography](https://en.wikipedia.org/wiki/Steganography) principles conceals any type of file or message in a .bmp image.  For added security the hidden data can be encrypted using desired encryption algorithm.
 
 ### Requirements
 
